@@ -39,6 +39,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/mixins.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -52,10 +53,39 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    'nuxt-sweetalert2'
   ],
+  router:{
+    middleware: ['auth']
+  },
+  
+  auth: {
+  strategies: {
+    local: {
+      token: {
+        property: 'token',
+        global: true,
+        // required: true,
+        type: false
+      },
+      user: {
+        property: 'user',
+        autoFetch: true
+      },
+      endpoints: {
+        login: { url: 'http://localhost:3000/user/login', method: 'post' },
+        logout: { url: '/api/auth/logout', method: 'post' },
+        user: { url: 'http://localhost:3000/user/', method: 'get' }
+      }
+    }
+  }
+},
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:3000'
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
