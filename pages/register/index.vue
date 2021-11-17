@@ -82,7 +82,9 @@ export default {
     async register() {
       try {
         const response = await this.createData("user/register", this.regist);
-        console.log(response);
+        if (response) {
+          this.$router.push("/login");
+        }
       } catch (error) {
         this.$swal({
           title: "Error",

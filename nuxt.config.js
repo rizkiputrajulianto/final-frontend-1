@@ -64,19 +64,19 @@ export default {
   strategies: {
     local: {
       token: {
-        property: 'token',
+        property: 'access',
         global: true,
         // required: true,
         type: false
       },
       user: {
-        property: 'user',
-        autoFetch: true
+        property: 'data',
+        // autoFetch: true
       },
       endpoints: {
         login: { url: 'http://localhost:3000/user/login', method: 'post' },
-        logout: { url: '/api/auth/logout', method: 'post' },
-        user: { url: 'http://localhost:3000/user/', method: 'get' }
+        logout: { url: 'http://localhost:3000/user/logout', method: 'post' },
+        user: { url: 'http://localhost:3000/user/me', method: 'get' }
       }
     }
   }

@@ -50,6 +50,13 @@
                   >Create a new Account</nuxt-link
                 >
               </div>
+              <div class="d-flex align-items-center justify-content-center">
+                <nuxt-link class="btn btn-warning" to="/"
+                  ><i class="fas fa-long-arrow-alt-left"
+                    >Go Back to Homepage</i
+                  ></nuxt-link
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -74,7 +81,12 @@ export default {
         const response = await this.$auth.loginWith("local", {
           data: this.logins,
         });
-        console.log(response);
+        this.$swal({
+          title: "Login Success",
+          text: "You are now logged in",
+          icon: "success",
+        });
+        this.$router.push("/");
       } catch (error) {
         console.log(error);
       }
