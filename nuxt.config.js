@@ -30,6 +30,9 @@ export default {
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/bootstrap.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/style.css' },
       { rel: 'stylesheet', type: 'text/css', href: '/assets/css/responsive.css' }
+    ],
+    script:[
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'}
     ] 
   },
 
