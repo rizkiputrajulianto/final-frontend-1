@@ -78,7 +78,8 @@
                 <div class="col-xl-7 col-12">
                   <div class="blog-details">
                     <div class="blog-date">
-                      <span>{{ listDate[i] }}</span> {{ listMonth[i] }}
+                      <span>{{ listDate[i] }}</span>
+                      {{ listMonth[i] }}
                       {{ listYear[i] }}
                       <!-- masih belum bagus -->
                     </div>
