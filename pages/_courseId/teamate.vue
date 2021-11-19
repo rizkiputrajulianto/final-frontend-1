@@ -6,17 +6,24 @@
           <div class="col-md-6 p-0">
             <ul class="nav nav-tabs border-tab" id="top-tab">
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="schedule" role="tab"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/schedule'"
+                  role="tab"
                   ><i data-feather="calendar"></i>Jadwal</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="course"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/course'"
                   ><i data-feather="edit"></i>Course</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link active" to="teamate"
+                <nuxt-link
+                  class="nav-link active"
+                  :to="'/' + `${$route.params.courseId}` + '/teamate'"
                   ><i data-feather="users"></i>Anggota</nuxt-link
                 >
               </li>

@@ -6,17 +6,24 @@
           <div class="col-md-6 p-0">
             <ul class="nav nav-tabs border-tab" id="top-tab" role="tablist">
               <li class="nav-item">
-                <nuxt-link class="nav-link active" to="schedule" role="tab"
+                <nuxt-link
+                  class="nav-link active"
+                  :to="'/' + `${$route.params.courseId}` + '/schedule'"
+                  role="tab"
                   ><i data-feather="calendar"></i>Jadwal</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="course"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/course'"
                   ><i data-feather="edit"></i>Course</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="teamate"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/teamate'"
                   ><i data-feather="users"></i>Anggota</nuxt-link
                 >
               </li>
@@ -129,6 +136,7 @@ export default {
   data() {
     return {
       listClass: "",
+      kelas: this.$route.params.courseId,
     };
   },
   mounted() {
@@ -137,7 +145,7 @@ export default {
   methods: {
     async GET_COURSE_DATA() {
       try {
-        const data = await this.getData("/class/010101");
+        const data = await this.getData("/class/" + this.kelas);
         this.listClass = data.data;
       } catch (error) {
         return this.$swal({

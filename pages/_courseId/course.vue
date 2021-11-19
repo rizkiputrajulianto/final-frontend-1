@@ -6,17 +6,24 @@
           <div class="col-md-6 p-0">
             <ul class="nav nav-tabs border-tab" id="top-tab">
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="schedule" role="tab"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/schedule'"
+                  role="tab"
                   ><i data-feather="calendar"></i>Jadwal</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link active" to="course"
+                <nuxt-link
+                  class="nav-link active"
+                  :to="'/' + `${$route.params.courseId}` + '/course'"
                   ><i data-feather="edit"></i>Course</nuxt-link
                 >
               </li>
               <li class="nav-item">
-                <nuxt-link class="nav-link" to="teamate"
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + `${$route.params.courseId}` + '/teamate'"
                   ><i data-feather="users"></i>Anggota</nuxt-link
                 >
               </li>
@@ -51,9 +58,15 @@
                     role="tab"
                     :aria-controls="`v-pills-sesi${i + 1}`"
                     aria-selected="false"
+                    @click="() => (slide = i)"
                     >Sesi {{ items.urutanSesi }}</a
                   >
                 </div>
+                <nuxt-link
+                  class="nav-link w-100"
+                  :to="'/sessions/' + `${this.$route.params.courseId}` + '/add'"
+                  >+ Session</nuxt-link
+                >
               </div>
               <div class="col-sm-9 col-xs-12">
                 <div
@@ -61,6 +74,7 @@
                   id="v-pills-tabContent"
                   v-for="(list, i) in dataClass.Sessions"
                   :key="i"
+                  v-show="slide === i"
                 >
                   <div
                     :class="`tab-pane fade ${i == 0 ? 'show active' : ''}`"
@@ -94,6 +108,29 @@
                                 :data-bs-target="`#modal-course${i}`"
                               >
                                 Buka
+                              </button>
+                              <button
+                                class="btn btn-info btn-sm"
+                                type="button"
+                                v-if="$auth.user.status === 'Admin'"
+                              >
+                                <nuxt-link
+                                  :to="
+                                    '/materi/' +
+                                    `${$route.params.courseId}` +
+                                    '/' +
+                                    item.id
+                                  "
+                                  >Edit</nuxt-link
+                                >
+                              </button>
+                              <button
+                                class="btn btn-dark btn-sm"
+                                type="button"
+                                v-if="$auth.user.status === 'Admin'"
+                                @click="deleteMateri(item.id)"
+                              >
+                                Delete
                               </button>
                             </div>
                           </div>
@@ -207,6 +244,12 @@
                     </div>
                   </div>
                 </div>
+                <nuxt-link
+                  class="p-5"
+                  :to="'/materi/' + `${this.$route.params.courseId}` + '/add'"
+                >
+                  + Materi</nuxt-link
+                >
               </div>
             </div>
           </div>
@@ -221,6 +264,7 @@ export default {
   data() {
     return {
       dataClass: "",
+      slide: 0,
     };
   },
   mounted() {
@@ -229,13 +273,40 @@ export default {
   methods: {
     async GET_LIST_SESSION() {
       try {
-        const data = await this.getData(`/class/010101`);
+        const data = await this.getData(
+          `/class/${this.$route.params.courseId}`
+        );
         console.log(data);
         this.dataClass = data.data;
       } catch (error) {
         return this.$swal({
           type: "error",
           title: "Oops...",
+          text: error.message,
+        });
+      }
+    },
+    async deleteMateri(id) {
+      try {
+        const del = await this.deleteData(`/materi/${id}`);
+        if (del) {
+          this.$swal({
+            type: "success",
+            title: "Success",
+            text: "Data Berhasil Dihapus",
+          });
+          this.$nuxt.refresh();
+        } else {
+          this.$swal({
+            type: "error",
+            title: "Oops...",
+            text: "Data Gagal Dihapus",
+          });
+        }
+      } catch (error) {
+        return this.$swal({
+          type: "error",
+          title: "Error",
           text: error.message,
         });
       }

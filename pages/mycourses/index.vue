@@ -4,7 +4,7 @@
     <!-- content card my courses -->
     <div class="row learning-block">
       <h6>My Courses :</h6>
-      <!-- {{ followClass.Sessions }} -->
+      {{ followClass }}
       <!-- looping content card here guys -->
       <div
         class="col-md-4 col-sm-6 box-col-6"
@@ -94,7 +94,13 @@
                   </div>
                 </div>
                 <div class="col-xl-2 col-12">
-                  <button class="btn btn-primary" type="button">Open</button>
+                  <button class="btn btn-dark" type="button">
+                    <nuxt-link
+                      class="nav-link"
+                      :to="'/' + followClass.kodeKelas + '/schedule'"
+                      >OPEN</nuxt-link
+                    >
+                  </button>
                 </div>
               </div>
             </div>
@@ -122,10 +128,10 @@ export default {
       const data = this.$auth.user.activeClass[this.followingClass];
       this.namaKelas = data.namaKelas;
       data.Sessions.forEach((item, i) => {
-        const assignDate = moment(item.waktuMulai).format("dddd");
-        const assignMonth = moment(item.waktuMulai).format("MMMM");
-        const assignYear = moment(item.waktuMulai).format("YYYY");
-        const assignHour = moment(item.waktuMulai).format("HH:mm");
+        const assignDate = this.$moment(item.waktuMulai).format("dddd");
+        const assignMonth = this.$moment(item.waktuMulai).format("MMMM");
+        const assignYear = this.$moment(item.waktuMulai).format("YYYY");
+        const assignHour = this.$moment(item.waktuMulai).format("HH:mm");
         this.listDate.push(assignDate);
         this.listMonth.push(assignMonth);
         this.listYear.push(assignYear);
