@@ -50,13 +50,26 @@
               >
                 Lihat
               </button>
-              <button class="btn btn-success" type="button">Register</button>
+              <button
+                v-if="item.isRegistered"
+                class="btn btn-danger"
+                type="button"
+                @click="outKelas(item.id)"
+              >
+                Keluar Kelas
+              </button>
+              <button
+                v-else
+                class="btn btn-success"
+                type="button"
+                @click="joinKelas(item.kodeKelas)"
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>
-      </div>
-      <!-- modal -->
-      <div v-for="(list, index) in listData" :key="index">
+        <!-- modal -->
         <div
           class="modal fade"
           :id="`modal-course${i}`"
@@ -69,7 +82,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-course">
-                  {{ list.namaKelas }}
+                  {{ item.namaKelas }}
                 </h4>
                 <hr />
                 <button
@@ -85,12 +98,12 @@
                   <div class="col-md-8">
                     <p>
                       Periode Kelas :
-                      {{ $moment(list.tanggalMulai).format("DD MMMM YYYY") }}
+                      {{ $moment(item.tanggalMulai).format("DD MMMM YYYY") }}
                       Sampai
-                      {{ $moment(list.tanggalSelesai).format("DD MMMM YYYY") }}
+                      {{ $moment(item.tanggalSelesai).format("DD MMMM YYYY") }}
                     </p>
                     <hr />
-                    <p>Deskripsi : {{ list.deskripsi }}</p>
+                    <p>Deskripsi : {{ item.deskripsi }}</p>
                     <button class="btn btn-success" type="button">
                       Register
                     </button>
@@ -118,7 +131,7 @@ export default {
   methods: {
     async GET_LIST_CLASS() {
       try {
-        const data = await this.getData("/class");
+        const data = await this.getData("/class/following");
         this.listData = data.data;
       } catch (error) {
         this.$swal({
@@ -126,6 +139,56 @@ export default {
           text: error.message,
           type: "error",
           confirmButtonText: "Close",
+        });
+      }
+    },
+    async joinKelas(classId) {
+      try {
+        const data = {
+          idClass: classId,
+          role: "Student",
+        };
+        console.log(data);
+        const requestDB = await this.createData("/member/", data);
+        if (requestDB) {
+          this.$swal({
+            title: "Success",
+            text: "Berhasil mendaftar ke kelas",
+            type: "success",
+            confirmButtonText: "Close",
+          }).then(() => {
+            this.GET_LIST_CLASS();
+            this.$router.push("/courses");
+          });
+        }
+      } catch (error) {
+        return this.$swal({
+          title: "Error",
+          text: error.msg,
+          icon: "error",
+        });
+      }
+    },
+    async outKelas(idClass) {
+      try {
+        const requestDB = await this.deleteData(
+          "/member/" + this.$auth.user.id + "/" + idClass
+        );
+        if (requestDB) {
+          this.$swal({
+            title: "Success",
+            text: "Berhasil keluar dari kelas",
+            type: "success",
+            confirmButtonText: "Close",
+          }).then(() => {
+            this.GET_LIST_CLASS();
+          });
+        }
+      } catch (error) {
+        return this.$swal({
+          title: "Error",
+          text: error.msg,
+          icon: "error",
         });
       }
     },

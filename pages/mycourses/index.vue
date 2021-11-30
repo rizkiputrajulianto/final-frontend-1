@@ -1,14 +1,12 @@
 <template>
   <div class="container-fluid">
-    <!-- {{ $auth.user }} -->
     <!-- content card my courses -->
     <div class="row learning-block">
       <h6>My Courses :</h6>
-      {{ followClass }}
       <!-- looping content card here guys -->
       <div
         class="col-md-4 col-sm-6 box-col-6"
-        v-for="(item, i) in $auth.user.activeClass"
+        v-for="(item, i) in this.classes"
         :key="i"
       >
         <div class="card">
@@ -42,12 +40,21 @@
               </div>
             </div>
             <div class="details-main">
-              <a href="">
+              <a :href="'/' + item.kodeKelas + '/schedule'">
                 <div class="bottom-details">
                   <h6>{{ item.namaKelas }}</h6>
                 </div></a
               >
               <p>{{ item.deskripsi }}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-dark btn-sm" type="button">
+                <nuxt-link
+                  class="nav-link"
+                  :to="'/' + item.kodeKelas + '/schedule'"
+                  >OPEN</nuxt-link
+                >
+              </button>
             </div>
           </div>
         </div>
@@ -61,7 +68,7 @@
       <!-- looping content card here guys -->
       <div
         class="col-md-12 col-sm-6 box-col-6"
-        v-for="(items, i) in followClass.Sessions"
+        v-for="(items, i) in Session"
         :key="i"
       >
         <div class="row">
@@ -78,9 +85,11 @@
                 <div class="col-xl-7 col-12">
                   <div class="blog-details">
                     <div class="blog-date">
-                      <span>{{ listDate[i] }}</span>
-                      {{ listMonth[i] }}
-                      {{ listYear[i] }}
+                      <span>{{
+                        $moment(items.waktuMulai).format("dddd")
+                      }}</span>
+                      {{ $moment(items.waktuMulai).format("MMMM") }}
+                      {{ $moment(items.waktuMulai).format("YYYY") }}
                       <!-- masih belum bagus -->
                     </div>
                     <a href="#">
@@ -88,19 +97,10 @@
                     >
                     <div class="blog-bottom-content">
                       <ul class="blog-social">
-                        <li>Nama Kelas : {{ namaKelas }}</li>
+                        <li>Nama Kelas : {{ namaKelas[followingClass] }}</li>
                       </ul>
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-2 col-12">
-                  <button class="btn btn-dark" type="button">
-                    <nuxt-link
-                      class="nav-link"
-                      :to="'/' + followClass.kodeKelas + '/schedule'"
-                      >OPEN</nuxt-link
-                    >
-                  </button>
                 </div>
               </div>
             </div>
@@ -119,25 +119,34 @@ export default {
       listMonth: [],
       listYear: [],
       listHour: [],
-      namaKelas: "",
+      namaKelas: [],
       followingClass: 0,
+      classes: null,
+      list: [],
+      sesi: [],
     };
   },
+  mounted() {
+    this.GET_DATA();
+  },
   computed: {
-    followClass() {
-      const data = this.$auth.user.activeClass[this.followingClass];
-      this.namaKelas = data.namaKelas;
-      data.Sessions.forEach((item, i) => {
-        const assignDate = this.$moment(item.waktuMulai).format("dddd");
-        const assignMonth = this.$moment(item.waktuMulai).format("MMMM");
-        const assignYear = this.$moment(item.waktuMulai).format("YYYY");
-        const assignHour = this.$moment(item.waktuMulai).format("HH:mm");
-        this.listDate.push(assignDate);
-        this.listMonth.push(assignMonth);
-        this.listYear.push(assignYear);
-        this.listHour.push(assignHour);
-      });
-      return data;
+    Session() {
+      return this.sesi[this.followingClass];
+    },
+  },
+  methods: {
+    async GET_DATA() {
+      try {
+        const response = await this.getData("/user/following");
+        console.log(response);
+        this.classes = response.data;
+        response.data.forEach((e) => {
+          this.namaKelas.push(e.namaKelas);
+          this.sesi.push(e.Sessions);
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

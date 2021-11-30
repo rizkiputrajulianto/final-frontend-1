@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <form @submit.prevent="requestDB">
+          {{ data }}
           <div class="form-group">
             <label for="judul">Judul Materi</label>
             <input
@@ -51,6 +52,7 @@ export default {
         namaMateri: "",
         jenisMateri: "",
         file: "",
+        idSesi: this.$route.params.sesiId,
       },
     };
   },
@@ -94,22 +96,26 @@ export default {
             "/materi/" + this.idMateri,
             this.data
           );
-          this.$swal({
-            title: "Success",
-            text: "Data berhasil diubah",
-            type: "success",
-            confirmButtonText: "Close",
-          });
-          this.$router.push({ path: "/" + this.idClass + "/course" });
+          if (data) {
+            this.$swal({
+              title: "Success",
+              text: "Data berhasil diubah",
+              type: "success",
+              confirmButtonText: "Close",
+            });
+            this.$router.push({ path: "/" + this.idClass + "/course" });
+          }
         } else {
           const data = await this.createData(`/materi`, this.data);
-          this.$swal({
-            title: "Success",
-            text: "Data berhasil ditambahkan",
-            type: "success",
-            confirmButtonText: "Close",
-          });
-          this.$router.push({ path: "/" + this.idClass + "/course" });
+          if (data) {
+            this.$swal({
+              title: "Success",
+              text: "Data berhasil ditambahkan",
+              type: "success",
+              confirmButtonText: "Close",
+            });
+            this.$router.push({ path: "/" + this.idClass + "/course" });
+          }
         }
       } catch (error) {
         return this.$swal({

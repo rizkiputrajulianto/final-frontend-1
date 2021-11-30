@@ -72,6 +72,7 @@ export default {
         waktuMulai: "",
         waktuSelesai: "",
         urutanSesi: "",
+        idClass: this.$route.params.classIds,
       },
     };
   },
@@ -99,6 +100,7 @@ export default {
             waktuMulai: waktuStart,
             waktuSelesai: waktuFinish,
             urutanSesi: response.data.urutanSesi,
+            idClass: this.$route.params.classId,
           };
         }
       } catch (error) {
@@ -117,20 +119,24 @@ export default {
             "/jadwal/" + this.kode,
             this.data
           );
-          this.$swal({
-            type: "success",
-            title: "Success!",
-            text: "Data has been updated!",
-          });
-          this.$router.push("/" + this.kelasId + "/course");
+          if (requestDB) {
+            this.$swal({
+              type: "success",
+              title: "Success!",
+              text: "Data has been updated!",
+            });
+            this.$router.push("/" + this.kelasId + "/course");
+          }
         } else {
           const requestDBs = await this.createData("/jadwal/", this.data);
-          this.$swal({
-            type: "success",
-            title: "Success!",
-            text: "Data has been created!",
-          });
-          this.$router.push("/" + this.kelasId + "/course");
+          if (requestDBs) {
+            this.$swal({
+              type: "success",
+              title: "Success!",
+              text: "Data has been created!",
+            });
+            this.$router.push("/" + this.kelasId + "/course");
+          }
         }
       } catch (error) {
         return this.$swal({

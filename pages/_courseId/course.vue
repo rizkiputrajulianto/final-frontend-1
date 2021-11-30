@@ -1,5 +1,8 @@
 <template>
   <div class="container-fluid">
+    <!-- {{ dataClass }}
+    <hr />
+    {{ slide }} -->
     <div class="col-md-12 project-list">
       <div class="card">
         <div class="row">
@@ -51,15 +54,25 @@
                   :key="i"
                 >
                   <a
-                    :class="`nav-link ${i == 0 ? 'show active' : ''}`"
+                    :class="` d-flex justify-content-between nav-link ${
+                      i == 0 ? 'show active' : ''
+                    }`"
                     :id="`v-pills-sesi${i + 1}-tab`"
                     data-bs-toggle="pill"
-                    :href="`#v-pills-sesi${i + 1}`"
                     role="tab"
+                    style="cursor: pointer"
                     :aria-controls="`v-pills-sesi${i + 1}`"
                     aria-selected="false"
                     @click="() => (slide = i)"
-                    >Sesi {{ items.urutanSesi }}</a
+                    >Sesi {{ items.urutanSesi }}
+                    <span
+                      ><nuxt-link
+                        class="btn btn-dark"
+                        style="z-index: 10"
+                        :to="'/sessions/' + classKode + '/' + items.kodeSesi"
+                        >EDIT</nuxt-link
+                      ></span
+                    ></a
                   >
                 </div>
                 <nuxt-link
@@ -77,7 +90,7 @@
                   v-show="slide === i"
                 >
                   <div
-                    :class="`tab-pane fade ${i == 0 ? 'show active' : ''}`"
+                    :class="`tab-pane fade show active`"
                     :id="`v-pills-sesi${i + 1}`"
                     role="tabpanel"
                     :aria-labelledby="`v-pills-sesi${i + 1}-tab`"
@@ -105,10 +118,163 @@
                                 class="btn btn-success btn-sm"
                                 type="button"
                                 data-bs-toggle="modal"
-                                :data-bs-target="`#modal-course${i}`"
+                                :data-bs-target="`#modal-course${index}`"
                               >
                                 Buka
                               </button>
+                              <!-- modal -->
+                              <div
+                                class="modal fade"
+                                :id="`modal-course${index}`"
+                                tabindex="-99"
+                                role="dialog"
+                                aria-labelledby="modal-course"
+                                aria-hidden="true"
+                                style="color: black"
+                              >
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4
+                                        class="modal-title"
+                                        :id="`modal-course${index}`"
+                                      >
+                                        {{ item.namaMateri }}
+                                      </h4>
+                                      <hr />
+                                      <button
+                                        class="btn-close"
+                                        type="button"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="row">
+                                        <div
+                                          v-if="item.jenisMateri == 'Materi'"
+                                          class="col-md-12 file-content"
+                                        >
+                                          <div
+                                            class="row file-manager card-body"
+                                          >
+                                            <h6>Document File :</h6>
+                                            <hr />
+                                            <ul class="files">
+                                              <li class="file-box">
+                                                <div class="file-top">
+                                                  <i
+                                                    class="
+                                                      fa fa-file-pdf-o
+                                                      txt-success
+                                                    "
+                                                  ></i>
+                                                  <!-- opsinya : powerpoint, pdf, code, archive -->
+                                                  <i
+                                                    class="
+                                                      fa fa-ellipsis-v
+                                                      f-14
+                                                      ellips
+                                                    "
+                                                  ></i>
+                                                </div>
+                                                <div class="file-bottom">
+                                                  <h6>
+                                                    <a :href="item.file || '#'"
+                                                      >File PDF</a
+                                                    >
+                                                  </h6>
+                                                </div>
+                                              </li>
+                                              <li class="file-box">
+                                                <div class="file-top">
+                                                  <i
+                                                    class="
+                                                      fa fa-file-powerpoint-o
+                                                      txt-success
+                                                    "
+                                                  ></i>
+                                                  <!-- opsinya : powerpoint, pdf, code, archive -->
+                                                  <i
+                                                    class="
+                                                      fa fa-ellipsis-v
+                                                      f-14
+                                                      ellips
+                                                    "
+                                                  ></i>
+                                                </div>
+                                                <div class="file-bottom">
+                                                  <h6>
+                                                    <a :href="item.file || '#'"
+                                                      >File PPT</a
+                                                    >
+                                                  </h6>
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div
+                                          v-else
+                                          class="col-md-12 file-content"
+                                        >
+                                          <div
+                                            class="row file-manager card-body"
+                                          >
+                                            <h6>Multimedia File :</h6>
+                                            <hr />
+                                            <ul class="files">
+                                              <li class="file-box">
+                                                <div class="file-top">
+                                                  <i
+                                                    class="
+                                                      fa fa-file-video-o
+                                                      txt-success
+                                                    "
+                                                  ></i>
+                                                  <!-- opsinya : video, image, audio -->
+                                                  <i
+                                                    class="
+                                                      fa fa-ellipsis-v
+                                                      f-14
+                                                      ellips
+                                                    "
+                                                  ></i>
+                                                </div>
+                                                <div class="file-bottom">
+                                                  <h6>Rec.Backend</h6>
+                                                </div>
+                                              </li>
+                                              <li class="file-box">
+                                                <div class="file-top">
+                                                  <i
+                                                    class="
+                                                      fa fa-file-image-o
+                                                      txt-success
+                                                    "
+                                                  ></i>
+                                                  <!-- opsinya : video, image, audio -->
+                                                  <i
+                                                    class="
+                                                      fa fa-ellipsis-v
+                                                      f-14
+                                                      ellips
+                                                    "
+                                                  ></i>
+                                                </div>
+                                                <div class="file-bottom">
+                                                  <h6>Preview</h6>
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
                               <button
                                 class="btn btn-info btn-sm"
                                 type="button"
@@ -117,7 +283,9 @@
                                 <nuxt-link
                                   :to="
                                     '/materi/' +
-                                    `${$route.params.courseId}` +
+                                    classKode +
+                                    '/' +
+                                    list.kodeSesi +
                                     '/' +
                                     item.id
                                   "
@@ -138,118 +306,13 @@
                       </div>
                     </div>
                   </div>
-                  <!-- modal -->
-                  <div
-                    class="modal fade"
-                    id="modal-course"
-                    tabindex="-99"
-                    role="dialog"
-                    aria-labelledby="modal-course"
-                    aria-hidden="true"
+                  <nuxt-link
+                    class="p-5"
+                    :to="'/materi/' + classKode + '/' + list.kodeSesi + '/add'"
                   >
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title" id="modal-course">
-                            Judul Materi
-                          </h4>
-                          <hr />
-                          <button
-                            class="btn-close"
-                            type="button"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-md-6 file-content">
-                              <div class="row file-manager card-body">
-                                <h6>Document File :</h6>
-                                <hr />
-                                <ul class="files">
-                                  <li class="file-box">
-                                    <div class="file-top">
-                                      <i
-                                        class="fa fa-file-pdf-o txt-success"
-                                      ></i>
-                                      <!-- opsinya : powerpoint, pdf, code, archive -->
-                                      <i
-                                        class="fa fa-ellipsis-v f-14 ellips"
-                                      ></i>
-                                    </div>
-                                    <div class="file-bottom">
-                                      <h6>Backend</h6>
-                                    </div>
-                                  </li>
-                                  <li class="file-box">
-                                    <div class="file-top">
-                                      <i
-                                        class="
-                                          fa fa-file-powerpoint-o
-                                          txt-success
-                                        "
-                                      ></i>
-                                      <!-- opsinya : powerpoint, pdf, code, archive -->
-                                      <i
-                                        class="fa fa-ellipsis-v f-14 ellips"
-                                      ></i>
-                                    </div>
-                                    <div class="file-bottom">
-                                      <h6>Backend</h6>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="col-md-6 file-content">
-                              <div class="row file-manager card-body">
-                                <h6>Multimedia File :</h6>
-                                <hr />
-                                <ul class="files">
-                                  <li class="file-box">
-                                    <div class="file-top">
-                                      <i
-                                        class="fa fa-file-video-o txt-success"
-                                      ></i>
-                                      <!-- opsinya : video, image, audio -->
-                                      <i
-                                        class="fa fa-ellipsis-v f-14 ellips"
-                                      ></i>
-                                    </div>
-                                    <div class="file-bottom">
-                                      <h6>Rec.Backend</h6>
-                                    </div>
-                                  </li>
-                                  <li class="file-box">
-                                    <div class="file-top">
-                                      <i
-                                        class="fa fa-file-image-o txt-success"
-                                      ></i>
-                                      <!-- opsinya : video, image, audio -->
-                                      <i
-                                        class="fa fa-ellipsis-v f-14 ellips"
-                                      ></i>
-                                    </div>
-                                    <div class="file-bottom">
-                                      <h6>Preview</h6>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    + Materi</nuxt-link
+                  >
                 </div>
-                <nuxt-link
-                  class="p-5"
-                  :to="'/materi/' + `${this.$route.params.courseId}` + '/add'"
-                >
-                  + Materi</nuxt-link
-                >
               </div>
             </div>
           </div>
@@ -265,6 +328,7 @@ export default {
     return {
       dataClass: "",
       slide: 0,
+      classKode: this.$route.params.courseId,
     };
   },
   mounted() {
@@ -296,6 +360,7 @@ export default {
             text: "Data Berhasil Dihapus",
           });
           this.$nuxt.refresh();
+          this.GET_LIST_SESSION();
         } else {
           this.$swal({
             type: "error",
