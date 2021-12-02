@@ -3,7 +3,6 @@
     <div class="card">
       <div class="card-body">
         <form @submit.prevent="requestDB">
-          {{ data }}
           <div class="form-group">
             <label for="judul">Judul Materi</label>
             <input
@@ -54,6 +53,7 @@ export default {
         file: "",
         idSesi: this.$route.params.sesiId,
       },
+      files: null,
     };
   },
   props: {
@@ -66,8 +66,7 @@ export default {
   methods: {
     change(e) {
       const file = e.target.files[0];
-      const url = URL.createObjectURL(file);
-      this.data.file = url;
+      this.files = file;
     },
     async GET_DATA() {
       try {
@@ -92,6 +91,12 @@ export default {
     async requestDB() {
       try {
         if (this.idMateri) {
+          if (this.files) {
+            const formData = new FormData();
+            formData.append("material", this.files);
+            const uploads = await this.createData("/uploads/files", formData);
+            this.data.file = uploads.data;
+          }
           const data = await this.putData(
             "/materi/" + this.idMateri,
             this.data
@@ -106,6 +111,12 @@ export default {
             this.$router.push({ path: "/" + this.idClass + "/course" });
           }
         } else {
+          if (this.files) {
+            const formData = new FormData();
+            formData.append("material", this.files);
+            const uploads = await this.createData("/uploads/files", formData);
+            this.data.file = uploads.data;
+          }
           const data = await this.createData(`/materi`, this.data);
           if (data) {
             this.$swal({

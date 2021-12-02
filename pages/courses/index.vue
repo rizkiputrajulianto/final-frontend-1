@@ -12,7 +12,11 @@
             <div class="product-img">
               <img
                 class="img-fluid top-radius-blog"
-                src="https://www.cognitoforms.com/file/RlZaPqUXSZwjYuIShOaf5q2EPyeMFxyXuXGybiQ7ufg6aZu-v_DtU0Y7yp5P9k8H"
+                :src="
+                  item.fotoKelas
+                    ? item.fotoKelas
+                    : 'https://www.cognitoforms.com/file/RlZaPqUXSZwjYuIShOaf5q2EPyeMFxyXuXGybiQ7ufg6aZu-v_DtU0Y7yp5P9k8H'
+                "
                 alt=""
               />
               <div class="product-hover">

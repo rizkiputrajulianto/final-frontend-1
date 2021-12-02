@@ -1,10 +1,9 @@
 <template>
   <div class="container-fluid">
-    {{ user.name }}
     <profile-detail
       :nama="user.name"
       :status="user.status"
-      :img="user.photo || null"
+      :img="user.photo ? user.photo : '/assets/images/dashboard/1.png'"
       :email="user.email"
       :phone="phone"
       :jobs="jobz"
@@ -32,6 +31,7 @@ export default {
   data() {
     return {
       profileUser: "",
+      photo: "",
       names: "",
       alamate: "",
       kecamatanz: "",
@@ -59,6 +59,7 @@ export default {
         const response = await this.getData("/user/profile");
         console.log(response);
         const { name } = response.data;
+        const { photo } = response.data;
         const { alamat } = response.data;
         const { Kecamatan } = response.data.alamat;
         const { kota } = response.data.alamat.Kecamatan;
@@ -74,6 +75,7 @@ export default {
         this.instagrams = instagram;
         this.linkedins = linkedin;
         this.names = name;
+        this.photo = photo;
         this.phone = phoneNumber;
         this.jobz = currentJob;
         this.alamate = alamat;

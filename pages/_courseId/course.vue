@@ -67,6 +67,7 @@
                     >Sesi {{ items.urutanSesi }}
                     <span
                       ><nuxt-link
+                        v-if="$auth.user.status === 'Admin'"
                         class="btn btn-dark"
                         style="z-index: 10"
                         :to="'/sessions/' + classKode + '/' + items.kodeSesi"
@@ -76,6 +77,7 @@
                   >
                 </div>
                 <nuxt-link
+                  v-if="$auth.user.status === 'Admin'"
                   class="nav-link w-100"
                   :to="'/sessions/' + `${this.$route.params.courseId}` + '/add'"
                   >+ Session</nuxt-link
@@ -307,6 +309,7 @@
                     </div>
                   </div>
                   <nuxt-link
+                    v-if="$auth.user.status === 'Admin'"
                     class="p-5"
                     :to="'/materi/' + classKode + '/' + list.kodeSesi + '/add'"
                   >

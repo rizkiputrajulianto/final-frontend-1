@@ -146,8 +146,8 @@ export default {
         bornDate: "",
         currentJob: "",
         institution: "",
-        phoneNumber: "",
         photo: "",
+        phoneNumber: "",
         alamat: {
           kota: "",
           kecamatan: "",
@@ -161,6 +161,7 @@ export default {
         },
       },
       kota: "",
+      photo: "",
     };
   },
   mounted() {
@@ -170,8 +171,7 @@ export default {
     toUrl(event) {
       // make file to url
       const file = event.target.files[0];
-      const url = URL.createObjectURL(file);
-      this.data.photo = url;
+      this.photo = file;
     },
     async GET_DATA() {
       try {
@@ -179,7 +179,6 @@ export default {
           "/user/" + this.$auth.user.username
         );
         const requestKota = await this.getData("/kota/");
-        console.log(requestKota);
         console.log(requestUser);
         this.kota = requestKota.data;
         this.data.photo = requestUser.data.photo;
@@ -202,6 +201,14 @@ export default {
     },
     async update() {
       try {
+        const formData = new FormData();
+        formData.append("avatar", this.photo);
+        //upload photo
+        const requestUpload = await this.createData(
+          "/uploads/avatar",
+          formData
+        );
+        this.data.photo = requestUpload.data;
         const request = await this.putData(
           "/user/" + this.$route.params.edit,
           this.data

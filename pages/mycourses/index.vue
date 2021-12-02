@@ -76,9 +76,10 @@
             <div class="card">
               <div class="blog-box blog-list row">
                 <div class="col-xl-3 col-12">
+                  <!-- src="/assets/images/dashboard/banner250.jpg" -->
                   <img
                     class="img-fluid sm-100-w"
-                    src="/assets/images/dashboard/banner250.jpg"
+                    src="https://www.cognitoforms.com/file/RlZaPqUXSZwjYuIShOaf5q2EPyeMFxyXuXGybiQ7ufg6aZu-v_DtU0Y7yp5P9k8H"
                     alt=""
                   />
                 </div>

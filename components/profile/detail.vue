@@ -9,7 +9,7 @@
             <div class="d-flex align-items-center justify-content-center">
               <img
                 class="img-100 rounded-circle"
-                :src="img || '/assets/images/dashboard/1.png'"
+                :src="img"
                 alt="ProfilePicture"
               />
             </div>
