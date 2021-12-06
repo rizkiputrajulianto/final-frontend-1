@@ -11,9 +11,7 @@
               <div class="media-body">
                 <span class="m-0">Class Active</span>
                 <h4 class="mb-0">
-                  <span class="counter">{{
-                    $auth.user.activeClass.length
-                  }}</span>
+                  <span class="counter">2</span>
                   Classs
                 </h4>
                 <i class="icon-bg" data-feather="database"></i>

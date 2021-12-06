@@ -5,8 +5,8 @@
         ><i data-feather="settings"></i></a
       ><img
         class="img-90 rounded-circle"
-        :src="
-          $auth.user.photo ? $auth.user.photo : '/assets/images/dashboard/1.png'
+        src="
+          '/assets/images/dashboard/1.png'
         "
         alt=""
       />
