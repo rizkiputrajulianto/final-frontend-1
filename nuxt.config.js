@@ -41,7 +41,7 @@ export default {
 			{ rel: 'stylesheet', type: 'text/css', href: '/assets/css/vector-map.css' },
 			{ rel: 'stylesheet', type: 'text/css', href: '/assets/css/bootstrap.css' },
 			{ rel: 'stylesheet', type: 'text/css', href: '/assets/css/style.css' },
-			{ rel: 'stylesheet', type: 'text/css', href: '/assets/css/responsive.css' },
+			{ rel: 'stylesheet', type: 'text/css', href: '/assets/css/responsive.css' }
 		],
 		script: [ { src: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' } ]
 	},
@@ -99,6 +99,7 @@ export default {
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {},
 	server: {
-		port: 5000 // default:3000
+		port: 8000, // default:3000
+		host: '0'
 	}
 };
