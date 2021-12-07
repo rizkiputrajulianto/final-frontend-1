@@ -182,7 +182,15 @@
                                                 </div>
                                                 <div class="file-bottom">
                                                   <h6>
-                                                    <a :href="item.file || '#'"
+                                                    <span
+                                                      v-if="item.file === null"
+                                                    >
+                                                      Not File Yet
+                                                    </span>
+                                                    <a
+                                                      v-else
+                                                      :href="item.file"
+                                                      target="_blank"
                                                       >File PDF</a
                                                     >
                                                   </h6>
@@ -207,7 +215,13 @@
                                                 </div>
                                                 <div class="file-bottom">
                                                   <h6>
-                                                    <a :href="item.file || '#'"
+                                                    <span
+                                                      v-if="item.file === null"
+                                                      >No File Yet</span
+                                                    >
+                                                    <a
+                                                      :href="item.file"
+                                                      target="_blank"
                                                       >File PPT</a
                                                     >
                                                   </h6>
@@ -244,7 +258,18 @@
                                                   ></i>
                                                 </div>
                                                 <div class="file-bottom">
-                                                  <h6>Rec.Backend</h6>
+                                                  <h6>
+                                                    <span
+                                                      v-if="item.file === null"
+                                                      >No File Yet</span
+                                                    >
+                                                    <a
+                                                      v-else
+                                                      :href="item.file"
+                                                      target="_blank"
+                                                      >File Video</a
+                                                    >
+                                                  </h6>
                                                 </div>
                                               </li>
                                               <li class="file-box">
@@ -265,7 +290,18 @@
                                                   ></i>
                                                 </div>
                                                 <div class="file-bottom">
-                                                  <h6>Preview</h6>
+                                                  <h6>
+                                                    <span
+                                                      v-if="item.file === null"
+                                                      >No File Yet</span
+                                                    >
+                                                    <a
+                                                      v-else
+                                                      :href="item.file"
+                                                      target="_blank"
+                                                      >Preview</a
+                                                    >
+                                                  </h6>
                                                 </div>
                                               </li>
                                             </ul>
