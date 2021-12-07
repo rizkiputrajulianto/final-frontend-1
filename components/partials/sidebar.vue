@@ -4,7 +4,7 @@
       <a class="setting-primary" href="javascript:void(0)"
         ><i data-feather="settings"></i></a
       ><img
-        v-if="!$auth.loggedIn && !$auth.user.photo"
+        v-if="!$auth.loggedIn || $auth.user.photo == ''"
         class="img-90 rounded-circle"
         src="/assets/images/dashboard/1.png"
         alt=""
