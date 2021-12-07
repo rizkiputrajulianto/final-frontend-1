@@ -343,7 +343,6 @@ export default {
         const data = await this.getData(
           `/class/${this.$route.params.courseId}`
         );
-        console.log(data);
         this.dataClass = data.data;
       } catch (error) {
         return this.$swal({

@@ -15,6 +15,10 @@
       :instagram="instagrams"
       :twitter="twitters"
       :linkedin="linkedins"
+      :facebookLink="facebooksLinks"
+      :instagramLink="instagramsLinks"
+      :twitterLink="twittersLinks"
+      :linkedinLink="linkedinsLinks"
     />
     <div class="d-flex justify-content-center">
       <a
@@ -43,6 +47,10 @@ export default {
       twitters: "",
       instagrams: "",
       linkedins: "",
+      facebooksLinks: "",
+      twittersLinks: "",
+      instagramsLinks: "",
+      linkedinsLinks: "",
     };
   },
   computed: {
@@ -57,7 +65,6 @@ export default {
     async THIS_DATA() {
       try {
         const response = await this.getData("/user/profile");
-        console.log(response);
         const { name } = response.data;
         const { photo } = response.data;
         const { alamat } = response.data;
@@ -70,10 +77,10 @@ export default {
         const { twitter } = response.data.sosmed;
         const { instagram } = response.data.sosmed;
         const { linkedin } = response.data.sosmed;
-        this.facebooks = facebook;
-        this.twitters = twitter;
-        this.instagrams = instagram;
-        this.linkedins = linkedin;
+        [this.facebooks, this.facebooksLinks] = facebook.split(",");
+        [this.twitters, this.twittersLinks] = twitter.split(",");
+        [this.instagrams, this.instagramsLinks] = instagram.split(",");
+        [this.linkedins, this.linkedinsLinks] = linkedin.split(",");
         this.names = name;
         this.photo = photo;
         this.phone = phoneNumber;

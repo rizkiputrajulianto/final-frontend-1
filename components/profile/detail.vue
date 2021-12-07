@@ -22,37 +22,37 @@
               <h4>{{ nama }}</h4>
             </div>
             <br />
-            <div class="row">
-              <div class="col-md-3">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-3" v-if="facebook">
                 <a
-                  :href="facebook"
-                  class="btn"
+                  :href="facebookLink"
+                  class="btn w-100"
                   style="background-color: #4267b2; cursor: default"
-                  ><i class="fa fa-facebook"></i>{{ facebook }}</a
+                  ><i class="fa fa-facebook p-1"></i>{{ facebook }}</a
                 >
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3" v-if="twitter">
                 <a
-                  :href="twitter"
-                  class="btn"
+                  :href="twitterLink"
+                  class="btn w-100"
                   style="background-color: #1da1f2; cursor: default"
-                  ><i class="fa fa-twitter"></i>{{ twitter }}</a
+                  ><i class="fa fa-twitter p-1"></i>{{ twitter }}</a
                 >
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3" v-if="instagram">
                 <a
-                  :href="instagram"
-                  class="btn"
+                  :href="instagramLink"
+                  class="btn w-100"
                   style="background-color: #e1306c; cursor: default"
-                  ><i class="fa fa-instagram"></i>{{ instagram }}</a
+                  ><i class="fa fa-instagram p-1"></i>{{ instagram }}</a
                 >
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3" v-if="linkedin">
                 <a
-                  :href="linkedin"
-                  class="btn"
+                  :href="linkedinLink"
+                  class="btn w-100"
                   style="background-color: #2867b2; cursor: default"
-                  ><i class="fa fa-linkedin"></i>{{ linkedin }}</a
+                  ><i class="fa fa-linkedin p-1"></i>{{ linkedin }}</a
                 >
               </div>
             </div>
@@ -111,6 +111,10 @@ export default {
     province: { type: String, default: "Jawa Barat" },
     country: { type: String, default: "Indonesia" },
     jobs: { type: String, default: "Gap Year" },
+    facebookLink: { type: String, default: "#" },
+    twitterLink: { type: String, default: "#" },
+    instagramLink: { type: String, default: "#" },
+    linkedinLink: { type: String, default: "#" },
   },
 };
 </script>

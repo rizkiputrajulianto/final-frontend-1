@@ -93,42 +93,70 @@
             </option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="facebook">Facebook</label>
+        <div class="input-group">
+          <span class="input-group-text">Facebook &amp; Link</span>
           <input
             type="text"
+            aria-label="Facebook Username"
             class="form-control"
-            id="facebook"
             v-model="data.sosmed.facebook"
           />
-        </div>
-        <div class="form-group">
-          <label for="twitter">Twitter</label>
           <input
             type="text"
+            aria-label="Facebook Link"
             class="form-control"
-            id="twitter"
+            v-model="linkFacebook"
+          />
+        </div>
+        <br />
+        <div class="input-group">
+          <span class="input-group-text">Twitter &amp; Link</span>
+          <input
+            type="text"
+            aria-label="Twitter Username"
+            class="form-control"
             v-model="data.sosmed.twitter"
           />
-        </div>
-        <div class="form-group">
-          <label for="instagram">Instagram</label>
           <input
             type="text"
+            aria-label="Twitter Link"
             class="form-control"
-            id="instagram"
+            v-model="linkTwitter"
+          />
+        </div>
+        <br />
+        <div class="input-group">
+          <span class="input-group-text">Instagram &amp; Link</span>
+          <input
+            type="text"
+            aria-label="Instagram Username"
+            class="form-control"
             v-model="data.sosmed.instagram"
           />
-        </div>
-        <div class="form-group">
-          <label for="linkedin">LinkedIn</label>
           <input
             type="text"
+            aria-label="Instagram Link"
             class="form-control"
-            id="linkedin"
-            v-model="data.sosmed.linkedin"
+            v-model="linkInstagram"
           />
         </div>
+        <br />
+        <div class="input-group">
+          <span class="input-group-text">LinkedIn &amp; Link</span>
+          <input
+            type="text"
+            aria-label="LinkedIn Username"
+            class="form-control"
+            v-model="data.sosmed.linkedin"
+          />
+          <input
+            type="text"
+            aria-label="LinkedIn Link"
+            v-model="linkLinkedIn"
+            class="form-control"
+          />
+        </div>
+        <br />
         <button type="button" class="btn btn-dark" @click="$router.go(-1)">
           Back
         </button>
@@ -162,6 +190,10 @@ export default {
       },
       kota: "",
       photo: "",
+      linkFacebook: "",
+      linkInstagram: "",
+      linkTwitter: "",
+      linkLinkedIn: "",
     };
   },
   mounted() {
@@ -179,7 +211,6 @@ export default {
           "/user/" + this.$auth.user.username
         );
         const requestKota = await this.getData("/kota/");
-        console.log(requestUser);
         this.kota = requestKota.data;
         this.data.photo = requestUser.data.photo;
         this.data.bornDate = requestUser.data.bornDate;
@@ -191,24 +222,57 @@ export default {
         this.data.alamat.kecamatan =
           requestUser.data.alamat.Kecamatan.namaKecamatan;
         this.data.alamat.kota = requestUser.data.alamat.Kecamatan.kota.namaKota;
-        this.data.sosmed.facebook = requestUser.data.sosmed.facebook;
-        this.data.sosmed.twitter = requestUser.data.sosmed.twitter;
-        this.data.sosmed.instagram = requestUser.data.sosmed.instagram;
-        this.data.sosmed.linkedin = requestUser.data.sosmed.linkedin;
+        [this.data.sosmed.facebook, this.linkFacebook] =
+          requestUser.data.sosmed.facebook.split(",");
+        [this.data.sosmed.twitter, this.linkTwitter] =
+          requestUser.data.sosmed.twitter.split(",");
+        [this.data.sosmed.instagram, this.linkInstagram] =
+          requestUser.data.sosmed.instagram.split(",");
+        [this.data.sosmed.linkedin, this.linkLinkedIn] =
+          requestUser.data.sosmed.linkedin.split(",");
       } catch (error) {
         return true;
       }
     },
     async update() {
       try {
-        const formData = new FormData();
-        formData.append("avatar", this.photo);
-        //upload photo
-        const requestUpload = await this.createData(
-          "/uploads/avatar",
-          formData
-        );
-        this.data.photo = requestUpload.data;
+        if (this.photo) {
+          const formData = new FormData();
+          formData.append("avatar", this.photo);
+          //upload photo
+          const requestUpload = await this.createData(
+            "/uploads/avatar",
+            formData
+          );
+          this.data.photo = requestUpload.data;
+        }
+        //no sosmed
+        if (
+          this.data.sosmed.facebook == "" &&
+          this.data.sosmed.twitter == "" &&
+          this.data.sosmed.instagram == "" &&
+          this.data.sosmed.linkedin == ""
+        ) {
+          delete this.data.sosmed;
+        } else {
+          if (this.linkFacebook) {
+            this.data.sosmed.facebook =
+              this.data.sosmed.facebook + "," + this.linkFacebook;
+          }
+          if (this.linkTwitter) {
+            this.data.sosmed.twitter =
+              this.data.sosmed.twitter + "," + this.linkTwitter;
+          }
+          if (this.linkInstagram) {
+            this.data.sosmed.instagram =
+              this.data.sosmed.instagram + "," + this.linkInstagram;
+          }
+          if (this.linkLinkedIn) {
+            this.data.sosmed.linkedin =
+              this.data.sosmed.linkedin + "," + this.linkLinkedIn;
+          }
+        }
+
         const request = await this.putData(
           "/user/" + this.$route.params.edit,
           this.data

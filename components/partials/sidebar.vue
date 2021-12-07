@@ -4,10 +4,15 @@
       <a class="setting-primary" href="javascript:void(0)"
         ><i data-feather="settings"></i></a
       ><img
+        v-if="!$auth.loggedIn"
         class="img-90 rounded-circle"
-        src="
-          '/assets/images/dashboard/1.png'
-        "
+        src="/assets/images/dashboard/1.png"
+        alt=""
+      />
+      <img
+        v-else
+        :src="$auth.user.photo"
+        class="img-90 rounded-circle"
         alt=""
       />
       <div v-if="this.$auth.loggedIn">
@@ -130,6 +135,27 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.sosmeds();
+  },
+  methods: {
+    sosmeds() {
+      let socmed = this.$auth.user.sosmed;
+      Object.filter = (obj, predicate) =>
+        Object.fromEntries(Object.entries(obj).filter(predicate));
+      let count = Object.filter(
+        socmed,
+        ([key, value]) => value !== "" && value !== socmed.id
+      );
+      console.log(count);
+      if (socmed == null) {
+        this.sosmed = 0;
+      } else {
+        this.sosmed = Object.keys(count).length;
+        console.log(this.sosmed);
+      }
+    },
   },
 };
 </script>

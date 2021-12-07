@@ -88,7 +88,11 @@ export default {
         });
         this.$router.push("/");
       } catch (error) {
-        console.log(error);
+        return this.$swal({
+          title: "Login Failed",
+          text: this.error,
+          icon: "error",
+        });
       }
     },
   },

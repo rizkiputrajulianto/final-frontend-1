@@ -11,7 +11,10 @@
               <div class="media-body">
                 <span class="m-0">Class Active</span>
                 <h4 class="mb-0">
-                  <span class="counter">2</span>
+                  <span v-if="$auth.loggedIn" class="counter">{{
+                    $auth.user.activeClass.length
+                  }}</span>
+                  <span v-else class="counter">0</span>
                   Classs
                 </h4>
                 <i class="icon-bg" data-feather="database"></i>
@@ -45,7 +48,7 @@
               </div>
               <div class="media-body">
                 <span class="m-0">Remain Task</span>
-                <h4 class="mb-0 counter">893</h4>
+                <h4 class="mb-0 counter">0</h4>
                 <i class="icon-bg" data-feather="message-circle"></i>
               </div>
             </div>
@@ -61,12 +64,17 @@
               </div>
               <div class="media-body">
                 <span class="m-0">Remain Task</span>
-                <h4 class="mb-0 counter">4531</h4>
+                <h4 class="mb-0 counter">0</h4>
                 <i class="icon-bg" data-feather="user-plus"></i>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body d-flex justify-content-center">
+        <news-card />
       </div>
     </div>
   </div>

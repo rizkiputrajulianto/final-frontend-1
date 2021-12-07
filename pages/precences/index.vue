@@ -33,6 +33,18 @@
                           <p>
                             Tanggal:
                             {{ $moment(list.waktuMulai).format("d MMMM YYYY") }}
+                            <br />
+                            Jam:
+                            {{ $moment(list.waktuMulai).format("HH:mm") }}
+                            <br />
+                            <b
+                              v-if="
+                                item.joinClass.role === 'Fasilitator' ||
+                                item.joinClass.role === 'Tutor'
+                              "
+                            >
+                              kode Sesi: {{ list.kodeSesi }}
+                            </b>
                           </p>
                         </div>
                         <div
@@ -168,7 +180,6 @@ export default {
     async GET_DATA() {
       try {
         const response = await this.getData("/absen/");
-        console.log(response.data);
         this.listClass = response.data;
       } catch (error) {
         console.log(error.msg);

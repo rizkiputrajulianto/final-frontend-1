@@ -139,7 +139,6 @@ export default {
     async GET_DATA() {
       try {
         const response = await this.getData("/user/following");
-        console.log(response);
         this.classes = response.data;
         response.data.forEach((e) => {
           this.namaKelas.push(e.namaKelas);
