@@ -83,9 +83,12 @@ export default {
 					// autoFetch: true
 				},
 				endpoints: {
-					login: { url: 'http://localhost:3000/user/login', method: 'post' },
-					logout: { url: 'http://localhost:3000/user/logout', method: 'post' },
-					user: { url: 'http://localhost:3000/user/me', method: 'get' }
+					// login: { url: 'http://localhost:3000/user/login', method: 'post' },
+					// logout: { url: 'http://localhost:3000/user/logout', method: 'post' },
+					// user: { url: 'http://localhost:3000/user/me', method: 'get' }
+					login: { url: 'https://backend-sacademy.herokuapp.com/user/login', method: 'post' },
+					logout: { url: 'https://backend-sacademy.herokuapp.com/user/logout', method: 'post' },
+					user: { url: 'https://backend-sacademy.herokuapp.com/user/me', method: 'get' }
 				}
 			}
 		}
