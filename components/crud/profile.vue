@@ -11,6 +11,7 @@
             class="form-control"
             id="nama"
             v-model="data.name"
+            required
           />
           <small>Input your Fullname</small>
         </div>

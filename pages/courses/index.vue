@@ -108,7 +108,21 @@
                     </p>
                     <hr />
                     <p>Deskripsi : {{ item.deskripsi }}</p>
-                    <button class="btn btn-success" type="button">
+
+                    <button
+                      v-if="item.isRegistered"
+                      class="btn btn-danger"
+                      type="button"
+                      @click="outKelas(item.id)"
+                    >
+                      Keluar Kelas
+                    </button>
+                    <button
+                      v-else
+                      class="btn btn-success"
+                      type="button"
+                      @click="joinKelas(item.kodeKelas)"
+                    >
                       Register
                     </button>
                   </div>

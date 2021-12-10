@@ -1,16 +1,18 @@
 <template>
   <div class="container-fluid">
     <profile-detail
-      :nama="user.name"
-      :status="user.status"
-      :img="user.photo ? user.photo : '/assets/images/dashboard/1.png'"
-      :email="user.email"
-      :phone="phone"
-      :jobs="jobz"
-      :address="alamate.namaAlamat"
-      :kecamatans="kecamatanz.namaKecamatan"
-      :city="kotas.namaKota"
-      :provice="provinsis.namaProvinsi"
+      :nama="profileUser.name"
+      :status="profileUser.status"
+      :img="
+        profileUser.photo ? profileUser.photo : '/assets/images/dashboard/1.png'
+      "
+      :email="profileUser.email"
+      :phone="profileUser.phoneNumber"
+      :jobs="profileUser.currentJob"
+      :address="alamat.alamat"
+      :kecamatans="alamat.kecamatan"
+      :city="alamat.kota"
+      :provice="alamat.provinsi"
       :facebook="facebooks"
       :instagram="instagrams"
       :twitter="twitters"
@@ -35,14 +37,7 @@ export default {
   data() {
     return {
       profileUser: "",
-      photo: "",
-      names: "",
-      alamate: "",
-      kecamatanz: "",
-      kotas: "",
-      provinsis: "",
-      phone: "",
-      jobz: "",
+      alamat: {},
       facebooks: "",
       twitters: "",
       instagrams: "",
@@ -64,34 +59,31 @@ export default {
   methods: {
     async THIS_DATA() {
       try {
-        const response = await this.getData("/user/profile");
-        const { name } = response.data;
-        const { photo } = response.data;
-        const { alamat } = response.data;
-        const { Kecamatan } = response.data.alamat;
-        const { kota } = response.data.alamat.Kecamatan;
-        const { provinsi } = response.data.alamat.Kecamatan.kota;
-        const { phoneNumber } = response.data;
-        const { currentJob } = response.data;
-        const { facebook } = response.data.sosmed;
-        const { twitter } = response.data.sosmed;
-        const { instagram } = response.data.sosmed;
-        const { linkedin } = response.data.sosmed;
-        [this.facebooks, this.facebooksLinks] = facebook.split(",");
-        [this.twitters, this.twittersLinks] = twitter.split(",");
-        [this.instagrams, this.instagramsLinks] = instagram.split(",");
-        [this.linkedins, this.linkedinsLinks] = linkedin.split(",");
-        this.names = name;
-        this.photo = photo;
-        this.phone = phoneNumber;
-        this.jobz = currentJob;
-        this.alamate = alamat;
-        this.kecamatanz = Kecamatan;
-        this.kotas = kota;
-        this.provinsis = provinsi;
-        this.profileUser = response.data;
+        if (this.$auth.user.name === null) {
+          this.$router.push("/profile/update/" + this.$auth.user.username);
+        } else {
+          const response = await this.getData("/user/profile")
+            .then((result) => {
+              if (result) {
+                console.log(result.data);
+                this.profileUser = result.data;
+                this.alamat = result.data.address;
+                const { facebook, twitter, instagram, linkedin } =
+                  result.data.sosmed;
+                [this.facebooks, this.facebooksLinks] = facebook.split(",");
+                [this.twitters, this.twittersLinks] = twitter.split(",");
+                [this.instagrams, this.instagramsLinks] = instagram.split(",");
+                [this.linkedins, this.linkedinsLinks] = linkedin.split(",");
+              } else {
+                return true;
+              }
+            })
+            .catch((err) => {
+              return true;
+            });
+        }
       } catch (error) {
-        return console.log(error);
+        return true;
       }
     },
   },

@@ -44,7 +44,7 @@
         </li>
         <li>
           <div v-if="this.$auth.loggedIn">
-            <div v-if="this.$auth.user.activeClass">
+            <div v-if="this.$auth.user.activeClass != null">
               <span
                 ><span class="counter">{{
                   $auth.user.activeClass.length
@@ -141,19 +141,25 @@ export default {
   },
   methods: {
     sosmeds() {
-      let socmed = this.$auth.user.sosmed;
-      Object.filter = (obj, predicate) =>
-        Object.fromEntries(Object.entries(obj).filter(predicate));
-      let count = Object.filter(
-        socmed,
-        ([key, value]) => value !== "" && value !== socmed.id
-      );
-      console.log(count);
-      if (socmed == null) {
+      if (this.$auth.loggedIn) {
+        let socmed = this.$auth.user.sosmed;
+        if (socmed == null || socmed == undefined) {
+          return (this.sosmed = 0);
+        }
         this.sosmed = 0;
-      } else {
-        this.sosmed = Object.keys(count).length;
-        console.log(this.sosmed);
+        Object.filter = (obj, predicate) =>
+          Object.fromEntries(Object.entries(obj).filter(predicate));
+        let count = Object.filter(
+          socmed,
+          ([key, value]) => value !== "" && value !== socmed.id
+        );
+        console.log(count);
+        if (socmed == null || socmed == undefined) {
+          this.sosmed = 0;
+        } else {
+          this.sosmed = Object.keys(count).length;
+          console.log(this.sosmed);
+        }
       }
     },
   },

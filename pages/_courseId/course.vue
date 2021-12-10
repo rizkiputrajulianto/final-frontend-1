@@ -120,14 +120,16 @@
                                 class="btn btn-success btn-sm"
                                 type="button"
                                 data-bs-toggle="modal"
-                                :data-bs-target="`#modal-course${index}`"
+                                :data-bs-target="`#modal-course${
+                                  i.toString() + index
+                                }`"
                               >
                                 Buka
                               </button>
                               <!-- modal -->
                               <div
                                 class="modal fade"
-                                :id="`modal-course${index}`"
+                                :id="`modal-course${i.toString() + index}`"
                                 tabindex="-99"
                                 role="dialog"
                                 aria-labelledby="modal-course"
@@ -220,6 +222,7 @@
                                                       >No File Yet</span
                                                     >
                                                     <a
+                                                      v-else
                                                       :href="item.file"
                                                       target="_blank"
                                                       >File PPT</a

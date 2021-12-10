@@ -47,35 +47,7 @@
                             </b>
                           </p>
                         </div>
-                        <div
-                          v-if="list.Absen == 'Not Yet'"
-                          class="col-md-4 col-sm-12 text-center"
-                        >
-                          Progress :
-                          <span class="counter">{{
-                            list.Absen === "Done" ? "100" : "0"
-                          }}</span
-                          >%
-                          <div class="progress">
-                            <div
-                              class="
-                                progress-bar
-                                bg-success
-                                progress-bar-striped progress-bar-animated
-                              "
-                              role="progressbar"
-                              :style="
-                                'width:' +
-                                `${list.Absen === 'Done' ? '100' : '0'}` +
-                                '%'
-                              "
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            ></div>
-                          </div>
-                          <hr class="d-sm-block d-md-none" />
-                        </div>
-                        <div v-else class="col-md-4 col-sm-12 text-center">
+                        <div class="col-md-4 col-sm-12 text-center">
                           <hr class="d-sm-block d-md-none" />
                         </div>
                         <div

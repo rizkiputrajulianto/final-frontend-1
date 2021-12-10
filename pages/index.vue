@@ -73,8 +73,12 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-body d-flex justify-content-center">
-        <news-card />
+      <div class="container">
+        <h1>Pengumuman</h1>
+        <hr />
+        <div class="card-body d-flex justify-content-center">
+          <news-card />
+        </div>
       </div>
     </div>
   </div>

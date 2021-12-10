@@ -27,7 +27,7 @@
                 <a
                   :href="facebookLink"
                   target="_blank"
-                  class="btn w-100"
+                  class="btn w-100 p-2"
                   style="background-color: #4267b2; cursor: default"
                   ><i class="fa fa-facebook p-1"></i>{{ facebook }}</a
                 >
@@ -36,7 +36,7 @@
                 <a
                   :href="twitterLink"
                   target="_blank"
-                  class="btn w-100"
+                  class="btn w-100 p-2"
                   style="background-color: #1da1f2; cursor: default"
                   ><i class="fa fa-twitter p-1"></i>{{ twitter }}</a
                 >
@@ -45,7 +45,7 @@
                 <a
                   :href="instagramLink"
                   target="_blank"
-                  class="btn w-100"
+                  class="btn w-100 p-2"
                   style="background-color: #e1306c; cursor: default"
                   ><i class="fa fa-instagram p-1"></i>{{ instagram }}</a
                 >
@@ -54,7 +54,7 @@
                 <a
                   :href="linkedinLink"
                   target="_blank"
-                  class="btn w-100"
+                  class="btn w-100 p-2"
                   style="background-color: #2867b2; cursor: default"
                   ><i class="fa fa-linkedin p-1"></i>{{ linkedin }}</a
                 >
