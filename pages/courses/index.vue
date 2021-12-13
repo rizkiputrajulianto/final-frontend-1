@@ -166,7 +166,6 @@ export default {
           idClass: classId,
           role: "Student",
         };
-        console.log(data);
         const requestDB = await this.createData("/member/", data);
         if (requestDB) {
           this.$swal({
